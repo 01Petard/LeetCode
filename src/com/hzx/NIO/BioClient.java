@@ -1,4 +1,4 @@
-package com.hzx.NIO相关;
+package com.hzx.NIO;
 
 import java.io.*;
 import java.net.Socket;
@@ -16,7 +16,7 @@ public class BioClient {
             String userInput;
             while ((userInput = consoleInput.readLine()) != null) {
                 out.println(userInput);
-                System.out.println("Server response: " + in.readLine());
+                System.out.println("服务端收到消息: " + in.readLine());
             }
         } catch (IOException e) {
             e.printStackTrace();
