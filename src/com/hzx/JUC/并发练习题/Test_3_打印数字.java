@@ -33,7 +33,6 @@ public class Test_3_打印数字 {
            要求：将输出所有的奇数。
         */
 
-
         //创建参数对象
         MyRunable_Test3 mr = new MyRunable_Test3();
 

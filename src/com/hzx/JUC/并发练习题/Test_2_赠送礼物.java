@@ -11,10 +11,10 @@ import java.util.concurrent.locks.ReentrantLock;
 class GivePresents1 implements Runnable {
 
     // Runnable只创建一次，所以不需要加static
-    int tickets;
+    int count;
 
-    public GivePresents1(int tickets){
-        this.tickets = tickets;
+    public GivePresents1(int count){
+        this.count = count;
     }
 
     @Override
@@ -24,14 +24,14 @@ class GivePresents1 implements Runnable {
             //2.同步代码块
             synchronized (GivePresents1.class) {
                 //3.判断共享数据（已经到末尾）
-                if (tickets <= 10) {
-                    System.out.println("礼物还剩下" + tickets + "个，不再赠送");
+                if (count <= 10) {
+                    System.out.println("礼物还剩下" + count + "个，不再赠送");
                     break;
                 } else {
                     //4.判断共享数据（没有到末尾）
-                    System.out.print(Thread.currentThread().getName() + "在赠送第" + tickets + "个礼物");
-                    tickets--;
-                    System.out.println("，还剩下" + tickets + "个礼物");
+                    System.out.print(Thread.currentThread().getName() + "在赠送第" + count + "个礼物");
+                    count--;
+                    System.out.println("，还剩下" + count + "个礼物");
                 }
             }
         }
@@ -41,7 +41,7 @@ class GivePresents1 implements Runnable {
 class GivePresents2 implements Runnable {
 
     // Runnable只创建一次，所以不需要加static
-    static int count;
+    int count;
 
     Lock lock = new ReentrantLock();
 
@@ -90,8 +90,8 @@ public class Test_2_赠送礼物 {
         */
 
         //创建参数对象
-        GivePresents1 mr1 = new GivePresents1(tickets);
-        GivePresents2 mr2 = new GivePresents2(tickets);
+        Runnable mr1 = new GivePresents1(tickets);
+        Runnable mr2 = new GivePresents2(tickets);
 
         //创建线程对象
         Thread t1 = new Thread(mr2, "圣诞老人1");
