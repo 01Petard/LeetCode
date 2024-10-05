@@ -1,4 +1,4 @@
-package com.hzx.Thread线程相关;
+package com.hzx.JUC;
 
 public class 模拟死锁_DeadLockDemo {
 

@@ -1,4 +1,4 @@
-package com.hzx.Thread线程相关.并发练习题;
+package com.hzx.JUC.并发练习题;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
