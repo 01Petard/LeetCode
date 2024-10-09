@@ -54,5 +54,30 @@ public class demo_CompletableFuture {
 
         // 执行后续代码
         System.out.println("All tasks completed.");
+
+        CompletableFuture<String> future1 = CompletableFuture.supplyAsync(() -> "Hello");
+        CompletableFuture<String> future2 = CompletableFuture.supplyAsync(() -> "World");
+        CompletableFuture<String> combinedFuture2 = future1.thenCombine(future2, (result1, result2) -> result1 + ", " + result2);
+        combinedFuture2.thenAccept(System.out::println);
+
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> "Hello").thenCompose(result -> CompletableFuture.supplyAsync(() -> result + ", World"));
+        future.thenAccept(System.out::println);
+
+
+        CompletableFuture<Object> future6 = CompletableFuture.supplyAsync(() -> {
+            throw new RuntimeException("Something went wrong");
+        }).exceptionally(ex -> "Exception occurred: " + ex.getMessage());
+        future6.thenAccept(System.out::println);
+
+        CompletableFuture<Object> future7 = CompletableFuture.supplyAsync(() -> {
+            throw new RuntimeException("Something went wrong");
+        }).handle((result, ex) -> {
+            if (ex != null) {
+                return ex.getMessage();
+            }
+            return result;
+
+        });
+        future7.thenAccept(System.out::println);
     }
 }
