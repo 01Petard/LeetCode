@@ -6,6 +6,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
+import org.springframework.util.ObjectUtils;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -25,20 +26,20 @@ public class PointsService implements IPointsService, ApplicationContextAware {
     }
 
     @Override
-    public void addPoints(Long userId, int points, PointsSuitScenesEnum scene) {
+    public void addPoints(Long userId, int points, PointsSuitScenesEnum scene) throws Exception {
         IPointsStrategy strategy = map.get(scene);
-        if (strategy == null) {
-            System.err.println("No strategy found for scene: " + scene);
+        if (ObjectUtils.isEmpty(strategy)) {
+            throw new Exception("No strategy found for scene: " + scene);
         }
         strategy.operaPoints(userId.toString(), points, 1);
     }
 
     @Override
-    public void subtractPoints(Long userId, int points, PointsSuitScenesEnum scene) {
+    public void subtractPoints(Long userId, int points, PointsSuitScenesEnum scene) throws Exception {
         IPointsStrategy strategy = map.get(scene);
-        if (strategy == null) {
-            System.err.println("No strategy found for scene: " + scene);
+        if (ObjectUtils.isEmpty(strategy)) {
+            throw new Exception("No strategy found for scene: " + scene);
         }
-        strategy.operaPoints(userId.toString(), points,0);
+        strategy.operaPoints(userId.toString(), points, 0);
     }
 }
